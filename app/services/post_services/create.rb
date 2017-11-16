@@ -28,8 +28,13 @@ module PostServices
       @errors << "Body can't be empty" if @body.blank?
       @errors << 'IP address must be present' if @ip.blank?
       @errors << 'Login must be present' if @login.blank?
+      @errors << 'IP not valid' if @ip.present? && @ip !~ ip_regex
 
       @errors.empty?
+    end
+
+    def ip_regex
+      %r{^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$}
     end
   end
 end

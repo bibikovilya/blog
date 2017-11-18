@@ -10,10 +10,10 @@ module PostServices
     def call
       if validation
         sql = <<-SQL
-          SELECT posts.id, posts.title, posts.body, AVG(rates.value) AS average_post
+          SELECT posts.id, posts.title, posts.body, round(AVG(rates.value)) AS rate
           FROM posts RIGHT JOIN rates ON rates.post_id = posts.id
           GROUP BY posts.id
-          ORDER BY average_post DESC
+          ORDER BY rate DESC
           LIMIT :count
         SQL
         query = ActiveRecord::Base.send(:sanitize_sql_array, [sql.squish, count: @count])

@@ -12,7 +12,7 @@ module PostServices
     def call
       if validation
         Rate.create(post: @post, value: @mark)
-        @average_rate = Rate.where(post: @post).average('value')
+        @average_rate = @post.average_rate
         @success = true
       else
         @success = false
@@ -23,7 +23,6 @@ module PostServices
 
     def validation
       @errors << 'Post must be present' if @post.blank?
-      @errors << "Mark can't be empty" if @mark.blank?
       @errors << 'Mark must be from 1 to 5' if @mark.present? && !@mark.between?(1,5)
 
       @errors.empty?

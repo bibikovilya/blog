@@ -5,4 +5,14 @@ class Post < ApplicationRecord
   def average_rate
     rates.average('value')
   end
+
+  def as_json
+    {
+      id: id,
+      user_id: user_id,
+      title: title,
+      body: body,
+      ip: ip.to_s
+    }
+  end
 end

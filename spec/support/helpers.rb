@@ -11,3 +11,7 @@ end
 def json_str_to_hash(str)
   JSON.parse(str).with_indifferent_access
 end
+
+def logins_by_ip(arr, ip)
+  arr.find { |i| i.keys.include? ip }[ip]
+end

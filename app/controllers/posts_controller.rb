@@ -9,9 +9,22 @@ class PostsController < ApplicationController
     end
   end
 
+  def top
+    ps = PostServices::Top.new(top_params[:count])
+    if ps.call
+      render json: ps.posts
+    else
+      render json: { errors: ps.errors }, status: 422
+    end
+  end
+
   private
 
   def post_params
     params.permit(:title, :body, :login, :ip)
+  end
+
+  def top_params
+    params.permit(:count)
   end
 end

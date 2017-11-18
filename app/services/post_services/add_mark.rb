@@ -11,7 +11,9 @@ module PostServices
 
     def call
       if validation
-        Rate.create(post: @post, value: @mark)
+        @post.lock!
+        @post.rates.create(value: @mark)
+
         @average_rate = @post.average_rate
         @success = true
       else

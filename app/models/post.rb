@@ -3,7 +3,7 @@ class Post < ApplicationRecord
   has_many :rates
 
   def average_rate
-    rates.average('value')
+    rates.average('value').to_f.round(2)
   end
 
   def as_json
